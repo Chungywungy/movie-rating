@@ -4,14 +4,6 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore"; 
 import { getAuth, signInAnonymously } from "firebase/auth";
 
-const auth = getAuth();
-signInAnonymously(auth)
-  .then(() => {
-    console.log("Signed in anonymously ✅");
-  })
-  .catch((error) => {
-    console.error("Anonymous sign-in failed:", error);
-  });
   
 const firebaseConfig = {
   apiKey: "AIzaSyDt3jalGC3bPfmee4mcaIV8jWlh1yWQw04",
@@ -27,3 +19,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
+
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Signed in anonymously ✅");
+  })
+  .catch((error) => {
+    console.error("Anonymous sign-in failed:", error);
+  });
