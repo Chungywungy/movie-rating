@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
-const auth = getAuth();
+const auth = getAuth(app);
 signInAnonymously(auth)
   .then(() => {
     console.log("Signed in anonymously ✅");
