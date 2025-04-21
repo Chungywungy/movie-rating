@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
 import axios from "axios";
 import { db } from "./firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
@@ -10,37 +11,43 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 export default function MovieSearch() {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [movie, setMovie] = useState(null);
   const [rating, setRating] = useState(null);
   const [averageRating, setAverageRating] = useState(null);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-
-    try {
-      const res = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
-        params: {
-          api_key: API_KEY,
-          query: searchQuery,
-        },
-      });
-
-      const results = res.data.results;
-      if (results.length > 0) {
-        const selectedMovie = results[0];
-        setMovie(selectedMovie);
-        setRating(null);
-        fetchAverageRating(selectedMovie.id);
-      } else {
-        setMovie(null);
-        setAverageRating(null);
-        alert("No movie found!");
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!searchQuery.trim()) {
+        setSearchResults([]);
+        return;
       }
-    } catch (err) {
-      console.error("Search failed", err);
-    }
-  };
+  
+      try {
+        const res = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
+          params: {
+            api_key: API_KEY,
+            query: searchQuery,
+          },
+        });
+  
+        const results = res.data.results;
+        setSearchResults(results || []);
+      } catch (err) {
+        console.error("Search failed", err);
+      }
+    };
+  
+    const debouncedFetch = debounce(fetchResults, 400); // delay 400ms
+    debouncedFetch();
+  
+    return () => {
+      debouncedFetch.cancel(); // cleanup on re-renders
+    };
+  }, [searchQuery]);
+  
+  
+  
 
   const saveRating = async (movie, score) => {
     try {
@@ -131,16 +138,33 @@ export default function MovieSearch() {
   return (
     <div className="app">
       <h1>🎬 Movies</h1>
+      <div style={{ position: "relative" }}>
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    placeholder="Search for a movie..."
+  />
 
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for a movie..."
-        />
-        <button type="submit">Search</button>
-      </form>
+  {searchResults.length > 0 && (
+    <ul className="dropdown">
+      {searchResults.slice(0, 5).map((movie) => (
+        <li
+          key={movie.id}
+          onClick={() => {
+            setMovie(movie);
+            setSearchResults([]);
+            setRating(null);
+            fetchAverageRating(movie.id);
+          }}
+        >
+          {movie.title} ({movie.release_date?.slice(0, 4)})
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
 
       {movie && (
         <div className="movie-card">

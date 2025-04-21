@@ -4,16 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://Chungywungy.github.io/movie-rating",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-},
-
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
   "dependencies": {
+    "axios": "^1.8.4",
     "firebase": "^11.6.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -33,5 +34,4 @@
     "tailwindcss": "^4.1.3",
     "vite": "^6.2.0"
   }
-  
 }

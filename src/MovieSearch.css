@@ -133,3 +133,31 @@ html, body {
   padding: 5px 0;
   border-bottom: 1px solid #30363d;
 }
+
+.dropdown {
+  list-style: none;
+  margin-top: 8px;
+  padding: 0;
+  border: 1px solid #30363d;
+  background-color: #293c56;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+}
+
+.dropdown li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #30363d;
+}
+
+.dropdown li:last-child {
+  border-bottom: none;
+}
+
+.dropdown li:hover {
+  background-color: #21262d;
+}
