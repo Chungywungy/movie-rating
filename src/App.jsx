@@ -135,6 +135,32 @@ export default function MovieSearch() {
     }
   };
 
+  const handleRandomMovie = async () => {
+    try {
+      const randomPage = Math.floor(Math.random() * 50) + 1; 
+      const res = await axios.get(`${TMDB_BASE_URL}/movie/popular`, {
+        params: {
+          api_key: API_KEY,
+          page: randomPage,
+        },
+      });
+  
+      const movies = res.data.results;
+      if (movies.length > 0) {
+        const randomIndex = Math.floor(Math.random() * movies.length);
+        const randomMovie = movies[randomIndex];
+  
+        setMovie(randomMovie);
+        setSearchResults([]);
+        setRating(null);
+        fetchAverageRating(randomMovie.id);
+      }
+    } catch (err) {
+      console.error("Failed to fetch random movie:", err);
+    }
+  };
+  
+
   return (
     <div className="app">
       <h1>🎬 Movies</h1>
@@ -165,48 +191,52 @@ export default function MovieSearch() {
   )}
 </div>
 
+<button onClick={handleRandomMovie} style={{marginBottom:"10px"}} >
+  🎰GAMBLING TIME 
+</button>
 
-      {movie && (
-        <div className="movie-card">
-          <h2>{movie.title} ({movie.release_date?.slice(0, 4)})</h2>
-          {movie.poster_path && (
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
-          )}
-          <p>{movie.overview}</p>
 
-          {averageRating && (
-            <p>⭐ Average Rating: {averageRating}/10</p>
-          )}
+{movie && (
+  <div className="movie-card">
+    <h2>{movie.title} ({movie.release_date?.slice(0, 4)})</h2>
+    {movie.poster_path && (
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+      />
+    )}
+    <p>{movie.overview}</p>
 
-          <p>Rate this movie:</p>
-          <div className="rating-buttons">
-            {[...Array(10)].map((_, i) => (
-              <button
-                key={i}
-                onClick={() => handleRate(i + 1)}
-                className={rating === i + 1 ? "selected-rating" : "unselected-rating"}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-      {topRatedMovies.length > 0 && (
-  <div className="rated-movies">
-    <h3>🏆 Top 10 Rated Movies</h3>
-    <ul>
-      {topRatedMovies.map((movie, index) => (
-        <li key={movie.movieId}>
-          <strong>{index + 1}. {movie.title}</strong> — {movie.average.toFixed(1)}/10 ({movie.count} rating{movie.count > 1 ? "s" : ""})
-        </li>
+    {averageRating && (
+      <p>⭐ Average Rating: {averageRating}/10</p>
+    )}
+
+    <p>Rate this movie:</p>
+    <div className="rating-buttons">
+      {[...Array(10)].map((_, i) => (
+        <button
+          key={i}
+          onClick={() => handleRate(i + 1)}
+          className={rating === i + 1 ? "selected-rating" : "unselected-rating"}
+        >
+          {i + 1}
+        </button>
       ))}
-    </ul>
+    </div>
   </div>
 )}
-    </div>
-  );
+  {topRatedMovies.length > 0 && (
+<div className="rated-movies">
+<h3>🏆 Top 10 Rated Movies</h3>
+<ul>
+  {topRatedMovies.map((movie, index) => (
+    <li key={movie.movieId}>
+      <strong>{index + 1}. {movie.title}</strong> — {movie.average.toFixed(1)}/10 ({movie.count} rating{movie.count > 1 ? "s" : ""})
+    </li>
+  ))}
+</ul>
+</div>
+)}
+</div>
+);
 }
