@@ -1,1 +1,1 @@
-rate movies thursday or whenever
+Rate movies Thursday or whenever.
