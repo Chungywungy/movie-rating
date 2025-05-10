@@ -1,7 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getRegisterErrorMessage } from './authErrors';
+import { getRegisterErrorMessage } from '../Login/LoginErrors';
 import React from 'react';
 import { useState } from 'react';
+import './Register.css';
 
 export default function Register() {
     const [email, setEmail] = useState('');

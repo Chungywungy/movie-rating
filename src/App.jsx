@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login/login';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 
@@ -10,6 +11,7 @@ export default function App() {
             <Routes>
                 <Route path='movie-rating/' element={<NavBar />}>
                     <Route index element={<Home />}></Route>
+                    <Route path='login' element={<Login />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
