@@ -1,0 +1,31 @@
+@import '../../colors.css';
+
+.nav-bar {
+    display: flex;
+    align-items: stretch;
+    background-color: var(--accent-color);
+    height: 4rem;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.nav-item > div {
+    display: flex;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+.center {
+    justify-content: center;
+}

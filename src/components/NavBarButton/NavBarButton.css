@@ -1,0 +1,30 @@
+@import '../../colors.css';
+
+.nav-bar-button {
+    border-radius: 0rem;
+    font-size: large;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.button-primary:hover {
+    background-color: var(--background-color);
+    color: var(--accent-color);
+}
+
+.button-secondary {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+}
+
+.button-secondary:hover {
+    background-color: var(--background-color);
+    color: var(--accent-color);
+}
