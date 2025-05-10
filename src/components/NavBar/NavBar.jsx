@@ -21,10 +21,10 @@ export default function NavBar() {
                             Home
                         </NavBarButton>
                         <NavBarButton
-                            to='/movie-rating/'
+                            to='/movie-rating/login'
                             className='button-secondary'
                         >
-                            Ratings
+                            Login
                         </NavBarButton>
                     </div>
                 </div>

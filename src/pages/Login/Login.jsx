@@ -1,8 +1,8 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { useState } from 'react';
-import { getLoginErrorMessage } from './authErrors';
-import './auth.css';
+import { getLoginErrorMessage } from './LoginErrors';
+import './Login.css';
 
 export default function Login() {
     const [email, setEmail] = useState('');
