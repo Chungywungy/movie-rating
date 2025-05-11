@@ -9,7 +9,7 @@ export default function NavBar() {
             <nav className='nav-bar'>
                 <div className='nav-item left'>
                     <div>
-                        <Logo to='/movie-rating'>Fawaz.com</Logo>
+                        <Logo to='/movie-rating'>Chungywungy.com</Logo>
                     </div>
                 </div>
                 <div className='nav-item center'>
@@ -30,7 +30,8 @@ export default function NavBar() {
                 </div>
                 <div className='nav-item right'>
                     <div>
-                        <div>Lol</div>
+                        <a href="https://chungywungy.github.io" target='blank'>
+                        Lol</a>
                     </div>
                 </div>
             </nav>
