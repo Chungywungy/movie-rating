@@ -1,14 +1,16 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { getLoginErrorMessage } from './LoginErrors';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [status, setStatus] = useState('');
+
+    const navigate = useNavigate();
 
     const loginEmailPassword = async (e) => {
         e.preventDefault();
@@ -16,7 +18,7 @@ export default function Login() {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                // ...
+                navigate('/movie-rating/');
                 setError('');
             })
             .catch((error) => {

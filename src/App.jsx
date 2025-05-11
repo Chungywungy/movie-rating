@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/login';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
+import { AuthContextProvider } from './contexts/AuthContext';
 
 export default function App() {
     return (
@@ -20,6 +21,8 @@ export default function App() {
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <App />
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
     </StrictMode>
 );
