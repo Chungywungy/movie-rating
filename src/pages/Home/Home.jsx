@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
 import { db } from '../../firebase';
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import './Home.css';
 
 const API_KEY = '3ae7b5b217c5389d349a90262ba52dec';
@@ -15,6 +15,7 @@ export default function Home() {
     const [movie, setMovie] = useState(null);
     const [rating, setRating] = useState(null);
     const [averageRating, setAverageRating] = useState(null);
+    const [watchlist, setWatchlist] = useState([]);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -165,6 +166,47 @@ export default function Home() {
         }
     };
 
+    const addToWatchlist = async (movie) => {
+        try {
+            await addDoc(collection(db, "watchlist"), {
+            title: movie.title,
+            movieId: movie.id,
+            addedAt: new Date(),
+            });
+            console.log(`✅ ${movie.title} added to watchlist`);
+        } catch (error) {
+            console.error("❌ Failed to add to watchlist:", error);
+        }
+    };
+    const fetchWatchlist = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "watchlist"));
+            const list = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            }));
+            setWatchlist(list);
+            console.log("📄 Watchlist:", list);
+        } catch (error) {
+            console.error("❌ Failed to fetch watchlist:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchWatchlist();
+    }, []);
+
+    const removeFromWatchlist = async (id) => {
+        try {
+            await deleteDoc(doc(db, "watchlist", id));
+            console.log("🗑 Removed from watchlist:", id);
+            fetchWatchlist(); 
+        } catch (error) {
+            console.error("❌ Failed to remove:", error);
+        }
+    };
+
+    
     return (
         <div className='app'>
             <h1>🎬 Movies</h1>
@@ -236,8 +278,36 @@ export default function Home() {
                             </button>
                         ))}
                     </div>
+                    <div className='watch-list'>
+                        <button onClick={() => addToWatchlist(movie)}>
+                            ➕ Add to Watchlist
+                        </button>
+                    </div>
                 </div>
             )}
+
+            <div>
+                <h2>📺 My Watchlist</h2>
+
+                {watchlist.length === 0 ? (
+                    <p>No movies added yet.</p>
+                ) : (
+                    <ul>
+                    {watchlist.map((movie) => (
+                        <li key={movie.id} style={{ marginBottom: "0.5rem" }}>
+                        {movie.title}
+                        <button
+                            style={{ marginLeft: "1rem", color: "red" }}
+                            onClick={() => removeFromWatchlist(movie.id)}
+                        >
+                            Remove
+                        </button>
+                        </li>
+                    ))}
+                    </ul>
+                )}
+            </div>
+
             {topRatedMovies.length > 0 && (
                 <div className='rated-movies'>
                     <h3>🏆 Top 10 Rated Movies</h3>
