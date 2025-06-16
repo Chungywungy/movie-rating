@@ -47,6 +47,10 @@ button {
     transition: background-color 0.2s ease-in-out;
 }
 
+button:not(.nav-bar-button) {
+    margin: 5px 2px;
+}
+
 button:hover {
     background-color: var(--background-color);
     color: var(--text-color);

@@ -294,10 +294,9 @@ export default function Home() {
                 ) : (
                     <ul>
                     {watchlist.map((movie) => (
-                        <li key={movie.id} style={{ marginBottom: "0.5rem" }}>
+                        <li key={movie.id}>
                         {movie.title}
                         <button
-                            style={{ marginLeft: "1rem", color: "red" }}
                             onClick={() => removeFromWatchlist(movie.id)}
                         >
                             Remove
