@@ -21,12 +21,6 @@ export default function NavBar() {
                         >
                             Home
                         </NavBarButton>
-                        <NavBarButton
-                            to='/movie-rating/login'
-                            className='button-secondary'
-                        >
-                            Login
-                        </NavBarButton>
                     </div>
                 </div>
                 <div className='nav-item right'>

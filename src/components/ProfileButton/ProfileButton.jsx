@@ -4,7 +4,6 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 function LoggedIn() {
-    const { currentUser } = useContext(AuthContext);
     const auth = getAuth();
 
     function handleClick() {

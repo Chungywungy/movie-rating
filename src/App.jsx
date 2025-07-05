@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/login';
 import Home from './pages/Home/Home';
+import Register from './pages/Register/register';
 import NavBar from './components/NavBar/NavBar';
 import { AuthContextProvider } from './contexts/AuthContext';
 
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path='movie-rating/' element={<NavBar />}>
                     <Route index element={<Home />}></Route>
                     <Route path='login' element={<Login />}></Route>
+                    <Route path='register' element={<Register />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

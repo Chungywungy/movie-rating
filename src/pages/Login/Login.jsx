@@ -1,5 +1,4 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
 import { useState, useContext } from 'react';
 import { getLoginErrorMessage } from './LoginErrors';
 import './Login.css';
@@ -26,9 +25,13 @@ export default function Login() {
             });
     };
 
+    function handleClick() {
+        navigate('/');
+    }
+
     return (
         <div className='auth-container'>
-            <h2>Login</h2>
+            <h2>Log In</h2>
             <form onSubmit={loginEmailPassword}>
                 <label>
                     {'Email'}
@@ -51,6 +54,9 @@ export default function Login() {
                 <p className='error'>{error && getLoginErrorMessage(error)}</p>
                 <button type='submit'>Submit</button>
             </form>
+            <p>
+                Don't have an account? <a href='register'>Register</a> here.
+            </p>
         </div>
     );
 }
