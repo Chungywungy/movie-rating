@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import NavBarButton from '../NavBarButton/NavBarButton';
 import './NavBar.css';
 import Logo from '../Logo/Logo';
+import ProfileButton from '../ProfileButton/ProfileButton';
 
 export default function NavBar() {
     return (
@@ -30,8 +31,7 @@ export default function NavBar() {
                 </div>
                 <div className='nav-item right'>
                     <div>
-                        <a href="https://chungywungy.github.io" target='blank'>
-                        Lol</a>
+                        <ProfileButton></ProfileButton>
                     </div>
                 </div>
             </nav>
