@@ -15,6 +15,7 @@
 - a random movie button
 - a watch later list
     - add a button on the movie card when user searches and on the movie info page
+    - this would also require creating an account or just save to local storage
 
 
 ### Potentially built with:
